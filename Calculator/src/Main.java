@@ -22,74 +22,79 @@ public class Main extends JFrame {
     private JLabel resultLabel;
     private JComboBox<String> speedUnitBox;
 
+    private GridBagConstraints crt_conts(int x, int y, int width, int height, int fill, Insets insets) { // rewrote gridconstraint cuz typing always makes me pmo..
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = x;
+        c.gridy = y;
+        c.gridwidth = width;
+        c.gridheight = height;
+        c.fill = fill;
+        c.insets = insets;
+        return c;
+    }
+
     public Main() {
         setTitle("Bandwidth Calculator");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
-        // Main panel with proper layout
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size,Settings.Border_Size,Settings.Border_Size,Settings.Border_Size));
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(Settings.GUI_Sizes[1], Settings.GUI_Sizes[0], 
-                             Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
-        c.fill = GridBagConstraints.HORIZONTAL;
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size, Settings.Border_Size, Settings.Border_Size, Settings.Border_Size));
+
+        Insets defaultInsets = new Insets(Settings.GUI_Sizes[1], Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
 
         // Title label
         JLabel titleLabel = new JLabel("Bandwidth Calculator", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        c.gridx = 0; c.gridy = 0; c.gridwidth = 4;
-        mainPanel.add(titleLabel, c);
+        mainPanel.add(titleLabel, 
+            crt_conts(0, 0, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
         // File size input
-        c.gridx = 0; c.gridy = 1; c.gridwidth = 1;
-        mainPanel.add(new JLabel("File Size:"), c);
+        mainPanel.add(new JLabel("File Size:"), 
+            crt_conts(0, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
-        c.gridx = 1; c.gridwidth = 2;
         sizeField = new JTextField();
         sizeField.setPreferredSize(new Dimension(150, Settings.GUI_Sizes[2]));
-        mainPanel.add(sizeField, c);
+        mainPanel.add(sizeField, 
+            crt_conts(1, 1, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
-        c.gridx = 3; c.gridwidth = 1;
         unitBox = new JComboBox<>(Settings.UNITS);
         unitBox.setPreferredSize(new Dimension(80, Settings.GUI_Sizes[2]));
-        mainPanel.add(unitBox, c);
+        mainPanel.add(unitBox, 
+            crt_conts(3, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
         // Speed input
-        c.gridx = 0; c.gridy = 2;
-        mainPanel.add(new JLabel("Download Speed:"), c);
+        mainPanel.add(new JLabel("Download Speed:"), 
+            crt_conts(0, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
-        c.gridx = 1; c.gridwidth = 2;
         speedField = new JTextField();
         speedField.setPreferredSize(new Dimension(150, Settings.GUI_Sizes[2]));
-        mainPanel.add(speedField, c);
+        mainPanel.add(speedField, 
+            crt_conts(1, 2, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
-        c.gridx = 3; c.gridwidth = 1;
         speedUnitBox = new JComboBox<>(Settings.SPEED_UNITS);
         speedUnitBox.setPreferredSize(new Dimension(80, Settings.GUI_Sizes[2]));
-        mainPanel.add(speedUnitBox, c);
+        mainPanel.add(speedUnitBox, 
+            crt_conts(3, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
         // Calculate button
-        c.gridx = 0; c.gridy = 3; c.gridwidth = 4;
-        c.fill = GridBagConstraints.CENTER;
         JButton calc = new JButton("Calculate Download Time");
         calc.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2] + 5));
         calc.setBackground(new Color(70, 130, 180));
-        calc.setForeground(Color.WHITE);
+        calc.setForeground(Color.white);
         calc.setFocusPainted(false);
-        mainPanel.add(calc, c);
+        mainPanel.add(calc, 
+            crt_conts(0, 3, 4, 1, GridBagConstraints.CENTER, defaultInsets));
 
         // Result panel
-        c.gridx = 0; c.gridy = 4; c.gridwidth = 4;
-        c.fill = GridBagConstraints.HORIZONTAL;
         JPanel resultPanel = new JPanel();
         resultPanel.setBorder(BorderFactory.createTitledBorder("Result"));
         resultPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        
+
         resultLabel = new JLabel("Time will be displayed here");
         resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
         resultPanel.add(resultLabel);
-        mainPanel.add(resultPanel, c);
+        mainPanel.add(resultPanel, 
+            crt_conts(0, 4, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
         // Action listener for the calculate button
         calc.addActionListener(e -> {
@@ -113,9 +118,9 @@ public class Main extends JFrame {
 
                 resultLabel.setText(String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(Main.this, 
-                    "Please enter valid positive numbers", 
-                    "Input Error", 
+                JOptionPane.showMessageDialog(Main.this,
+                    "Please enter valid positive numbers",
+                    "Input Error",
                     JOptionPane.ERROR_MESSAGE);
             }
         });
