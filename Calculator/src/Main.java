@@ -2,15 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-interface Calculator {
-    double calculate(double fileSizeMb, double speedMbps);
-}
-
-class BandwidthCalculator implements Calculator {
-    public double calculate(double fileSizeMb, double speedMbps) {
-        return (fileSizeMb * 8) / speedMbps;
-    }
-}
+import Interfaces.*;
+import Calculator_Classes.*;
 
 public class Main extends JFrame {
     private JTextField sizeField;

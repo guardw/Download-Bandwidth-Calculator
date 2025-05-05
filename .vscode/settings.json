@@ -1,7 +1,0 @@
-{
-    "java.project.sourcePaths": [
-        "src",
-        "Calculator/src",
-        "Calculator/assets"
-    ]
-}
