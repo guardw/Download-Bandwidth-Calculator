@@ -6,13 +6,13 @@ class Settings {
     public static final String[] UNITS = {"MB", "GB"};
     public static final String[] SPEED_UNITS = {"Mbps", "Kbps"};
 
-    // Updated GUI sizes for better proportions
     public static final int[] GUI_Sizes = {
         15, // Horizontal padding
         10, // Vertical padding
         25, // Field height
         400 // Minimum width
     };
+    public static final int Border_Size = 10; // Border size
 }
 
 public class Main extends JFrame {
@@ -28,7 +28,7 @@ public class Main extends JFrame {
         
         // Main panel with proper layout
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size,Settings.Border_Size,Settings.Border_Size,Settings.Border_Size));
 
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(Settings.GUI_Sizes[1], Settings.GUI_Sizes[0], 
