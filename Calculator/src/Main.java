@@ -1,16 +1,20 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
 class Settings {
-    public static final String[] UNITS = {"MB", "GB"};
+    public static final String[] UNITS = {"MB", "GB", "Goon"};
     public static final String[] SPEED_UNITS = {"Mbps", "Kbps"};
 
     public static final int[] GUI_Sizes = {
-        15, // Horizontal padding
+        9, // Horizontal padding
         10, // Vertical padding
+
         25, // Field height
-        400 // Minimum width
+        300 // Minimum width
     };
     public static final int Border_Size = 10; // Border size
 }
@@ -37,9 +41,11 @@ public class Main extends JFrame {
         setTitle("Bandwidth Calculator");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/icon.png")));
+
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size, Settings.Border_Size, Settings.Border_Size, Settings.Border_Size));
-
+        
         Insets defaultInsets = new Insets(Settings.GUI_Sizes[1], Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
 
         // Title label
@@ -88,7 +94,7 @@ public class Main extends JFrame {
         // Result panel
         JPanel resultPanel = new JPanel();
         resultPanel.setBorder(BorderFactory.createTitledBorder("Result"));
-        resultPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        resultPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         resultLabel = new JLabel("Time will be displayed here");
         resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
