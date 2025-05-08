@@ -4,7 +4,12 @@ import javax.swing.*;
 
 public class SimulateDownload extends JFrame {
 
+    static boolean Active = false;
+    
     public SimulateDownload() {
+        if (Active == true) {return;}
+        Active = true;
+
         setTitle("Simulation Window");
         setSize(400, 300);
         setLocationRelativeTo(null);

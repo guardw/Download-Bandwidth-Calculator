@@ -141,7 +141,7 @@ public class Main extends JFrame {
                 int m = (int) ((secs % 3600) / 60);
                 int s = (int) (secs % 60);
 
-                resultLabel.setText(String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
+                Effects.labelRandomizeEffect(resultLabel,String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
 
                 JButton simulate = new JButton("Simulate Download");
                     simulate.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2]));
