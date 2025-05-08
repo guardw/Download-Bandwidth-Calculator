@@ -2,6 +2,7 @@ import Calculator_Classes.*;
 import custom_errors.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 class Settings {
     public static final String[] UNITS = {"KB", "MB", "GB", "TB"};
@@ -12,7 +13,8 @@ class Settings {
         10, // Vertical padding
 
         25, // Field height
-        300 // Minimum width
+        300, // Minimum width
+        400 // Minimum Height
     };
     public static final int Border_Size = 10; // Border size
 }
@@ -24,12 +26,16 @@ public class Main extends JFrame {
     private JLabel resultLabel;
     private JComboBox<String> speedUnitBox;
 
-    private GridBagConstraints crt_conts(int x, int y, int width, int height, int fill, Insets insets) { // rewrote gridconstraint cuz typing always makes me pmo..
+    BandwidthCalculator SpeedCalc = new BandwidthCalculator();
+
+    private GridBagConstraints crt_conts(int x, int y, int width, int height, int fill, Insets insets, double spacex, double spacey) { // rewrote gridconstraint cuz typing always makes me pmo..
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = x;
         c.gridy = y;
         c.gridwidth = width;
         c.gridheight = height;
+        c.weightx = spacex;
+        c.weighty = spacey;
         c.fill = fill;
         c.insets = insets;
         return c;
@@ -47,47 +53,62 @@ public class Main extends JFrame {
         Insets defaultInsets = new Insets(Settings.GUI_Sizes[1], Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
 
         // Title label
-        JLabel titleLabel = new JLabel("Bandwidth Calculator", JLabel.CENTER);
+        JPanel titlePanel = new JPanel();
+        int BorderThickness = 3;
+
+        TitledBorder titleBord = BorderFactory.createTitledBorder(
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(BorderThickness,BorderThickness,BorderThickness,BorderThickness, new Color(0, 0, 255, 128)), 
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)             
+            )
+        );
+        titleBord.setTitleColor(Color.WHITE);
+
+        titlePanel.setBorder(titleBord);
+        titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JLabel titleLabel = new JLabel("Bandwidth Calculator");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        mainPanel.add(titleLabel, 
-            crt_conts(0, 0, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
+        titlePanel.add(titleLabel);
+        mainPanel.add(titlePanel, 
+        crt_conts(0, -1, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 1,1));
 
         // File size input
         mainPanel.add(new JLabel("File Size:"), 
-            crt_conts(0, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
+            crt_conts(0, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0,0));
 
         sizeField = new JTextField();
         sizeField.setPreferredSize(new Dimension(150, Settings.GUI_Sizes[2]));
         mainPanel.add(sizeField, 
-            crt_conts(1, 1, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
+            crt_conts(1, 1, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets,0,0));
 
         unitBox = new JComboBox<>(Settings.UNITS);
         unitBox.setPreferredSize(new Dimension(80, Settings.GUI_Sizes[2]));
         mainPanel.add(unitBox, 
-            crt_conts(3, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
+            crt_conts(3, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets,0,0));
 
         // Speed input
         mainPanel.add(new JLabel("Bandwidth:"), 
-            crt_conts(0, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
+            crt_conts(0, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets,0,0));
 
         speedField = new JTextField();
         speedField.setPreferredSize(new Dimension(150, Settings.GUI_Sizes[2]));
         mainPanel.add(speedField, 
-            crt_conts(1, 2, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
+            crt_conts(1, 2, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets,0,0));
 
         speedUnitBox = new JComboBox<>(Settings.SPEED_UNITS);
         speedUnitBox.setPreferredSize(new Dimension(80, Settings.GUI_Sizes[2]));
         mainPanel.add(speedUnitBox, 
-            crt_conts(3, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
+            crt_conts(3, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets,0,0));
 
         // Calculate button
         JButton calc = new JButton("Calculate Download Time");
         calc.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2] + 5));
         calc.setBackground(new Color(70, 130, 180));
         calc.setForeground(Color.white);
-        calc.setFocusPainted(false);
+        calc.setFocusPainted(true);
         mainPanel.add(calc, 
-            crt_conts(0, 3, 4, 1, GridBagConstraints.CENTER, defaultInsets));
+            crt_conts(0, 3, 4, 1, GridBagConstraints.CENTER, defaultInsets,0,0));
 
         // Result panel
         JPanel resultPanel = new JPanel();
@@ -98,9 +119,8 @@ public class Main extends JFrame {
         resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
         resultPanel.add(resultLabel);
         mainPanel.add(resultPanel, 
-            crt_conts(0, 4, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
+        crt_conts(0, 4, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets,0,0));
 
-        // Action listener for the calculate button
         calc.addActionListener(e -> {
             try {
                 double size = Double.parseDouble(sizeField.getText());
@@ -115,13 +135,25 @@ public class Main extends JFrame {
 
                 System.out.println(size + " " + mb + " " + mbps); 
                 
-                double secs = (mb * 8) / mbps; 
+                double secs = SpeedCalc.calculate(mb,mbps);
 
                 int h = (int) (secs / 3600);
                 int m = (int) ((secs % 3600) / 60);
                 int s = (int) (secs % 60);
 
                 resultLabel.setText(String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
+
+                JButton simulate = new JButton("Simulate Download");
+                    simulate.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2]));
+                    simulate.setBackground(new Color(38, 163, 71));
+                    simulate.setForeground(Color.white);
+                    simulate.setFocusPainted(true);
+                    mainPanel.add(simulate, 
+                    crt_conts(0, 5, 5, 1, GridBagConstraints.HORIZONTAL, defaultInsets,0,0));
+                
+                simulate.addActionListener(ey -> {
+                    SimulateDownload window = new SimulateDownload();
+                });
 
             } catch (NumberFormatException | InvalidUnitType ex) {
                 JOptionPane.showMessageDialog(Main.this,
@@ -135,7 +167,7 @@ public class Main extends JFrame {
         setContentPane(mainPanel);
 
         pack();
-        setMinimumSize(new Dimension(Settings.GUI_Sizes[3], getHeight()));
+        setMinimumSize(new Dimension(Settings.GUI_Sizes[3], Settings.GUI_Sizes[4]));
         setLocationRelativeTo(null);
         setVisible(true);
     }
