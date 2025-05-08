@@ -1,10 +1,11 @@
 import Calculator_Classes.*;
+import custom_errors.*;
 import java.awt.*;
 import javax.swing.*;
 
 class Settings {
-    public static final String[] UNITS = {"MB", "GB", "Goon"};
-    public static final String[] SPEED_UNITS = {"Mbps", "Kbps"};
+    public static final String[] UNITS = {"KB", "MB", "GB", "TB"};
+    public static final String[] SPEED_UNITS = {"Kbp/s","Mbp/s","Gbp/s","Tbp/s"};
 
     public static final int[] GUI_Sizes = {
         9, // Horizontal padding
@@ -66,7 +67,7 @@ public class Main extends JFrame {
             crt_conts(3, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
         // Speed input
-        mainPanel.add(new JLabel("Download Speed:"), 
+        mainPanel.add(new JLabel("Bandwidth:"), 
             crt_conts(0, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets));
 
         speedField = new JTextField();
@@ -107,32 +108,25 @@ public class Main extends JFrame {
                 double speed = Double.parseDouble(speedField.getText());
                 String speedUnit = (String) speedUnitBox.getSelectedItem();
 
-                if (size <= 0 || speed <= 0) throw new NumberFormatException();
+                if (size <= 0 || speed <= 0) throw new NumberFormatException("Please enter valid positive numbers.");
 
-                try {
-                    double mb = BitsClass.convert(size, unit);
-                    double mbps = speedUnit.equals("Kbps") ? speed / 1000 : speed;
-    
-                    System.out.println(size + " " + mb + " " + mbps); 
-                    
-                    double secs = (mb * 8) / mbps; // Simple calculation
-    
-                    int h = (int) (secs / 3600);
-                    int m = (int) ((secs % 3600) / 60);
-                    int s = (int) (secs % 60);
+                double mb = BitsClass.convertMB(size, unit);
+                double mbps = BitsClass.convertMBPS(speed, speedUnit);
 
-                    resultLabel.setText(String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
-                } catch (Exception z) {
-                    JOptionPane.showMessageDialog(Main.this,
-                    "Invalid Bite Unit",
-                    "Bite Error",
-                    JOptionPane.ERROR_MESSAGE);
-                }
-               
-            } catch (NumberFormatException ex) {
+                System.out.println(size + " " + mb + " " + mbps); 
+                
+                double secs = (mb * 8) / mbps; 
+
+                int h = (int) (secs / 3600);
+                int m = (int) ((secs % 3600) / 60);
+                int s = (int) (secs % 60);
+
+                resultLabel.setText(String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
+
+            } catch (NumberFormatException | InvalidUnitType ex) {
                 JOptionPane.showMessageDialog(Main.this,
-                    "Please enter valid positive numbers",
-                    "Input Error",
+                    ex.getMessage(),
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
             }
         });

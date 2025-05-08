@@ -1,5 +1,8 @@
 package custom_errors;
 
-public class InvalidUnitType {
-
+// InvalidUnitType class definition
+public class InvalidUnitType extends Exception {
+    public InvalidUnitType(String unit) {
+        super("Invalid unit type: " + unit);
+    }
 }
