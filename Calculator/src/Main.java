@@ -1,9 +1,6 @@
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import Calculator_Classes.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.*;
 
 class Settings {
     public static final String[] UNITS = {"MB", "GB", "Goon"};
@@ -112,18 +109,27 @@ public class Main extends JFrame {
 
                 if (size <= 0 || speed <= 0) throw new NumberFormatException();
 
-                // Convert to common units
-                double mb = unit.equals("GB") ? size * 1024 : size;
-                double mbps = speedUnit.equals("Kbps") ? speed / 1000 : speed;
+                try {
+                    double mb = BitsClass.convert(size, unit);
+                    double mbps = speedUnit.equals("Kbps") ? speed / 1000 : speed;
+    
+                    System.out.println(size + " " + mb + " " + mbps); 
+                    
+                    double secs = (mb * 8) / mbps; // Simple calculation
+    
+                    int h = (int) (secs / 3600);
+                    int m = (int) ((secs % 3600) / 60);
+                    int s = (int) (secs % 60);
 
-                double secs = (mb * 8) / mbps; // Simple calculation
-
-                int h = (int) (secs / 3600);
-                int m = (int) ((secs % 3600) / 60);
-                int s = (int) (secs % 60);
-
-                resultLabel.setText(String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
-            } catch (Exception ex) {
+                    resultLabel.setText(String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
+                } catch (Exception z) {
+                    JOptionPane.showMessageDialog(Main.this,
+                    "Invalid Bite Unit",
+                    "Bite Error",
+                    JOptionPane.ERROR_MESSAGE);
+                }
+               
+            } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(Main.this,
                     "Please enter valid positive numbers",
                     "Input Error",
