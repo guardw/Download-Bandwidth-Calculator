@@ -5,7 +5,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 class Settings {
-    public static final String[] UNITS = {"KB", "MB", "GB", "TB","Gurt"};
+    public static final String[] UNITS = {"KB", "MB", "GB", "TB"};
     public static final String[] SPEED_UNITS = {"Kbp/s","Mbp/s","Gbp/s","Tbp/s"};
 
     public static final int[] GUI_Sizes = {
