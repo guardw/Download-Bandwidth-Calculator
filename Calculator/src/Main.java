@@ -5,7 +5,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 class Settings {
-    public static final String[] UNITS = {"KB", "MB", "GB", "TB"};
+    public static final String[] UNITS = {"KB", "MB", "GB", "TB","Gurt"};
     public static final String[] SPEED_UNITS = {"Kbp/s","Mbp/s","Gbp/s","Tbp/s"};
 
     public static final int[] GUI_Sizes = {
@@ -25,6 +25,7 @@ public class Main extends JFrame {
     private JTextField speedField;
     private JLabel resultLabel;
     private JComboBox<String> speedUnitBox;
+    private String current_label_Text;
 
     BandwidthCalculator SpeedCalc = new BandwidthCalculator();
 
@@ -54,7 +55,7 @@ public class Main extends JFrame {
 
         // Title label
         JPanel titlePanel = new JPanel();
-        int BorderThickness = 3;
+        int BorderThickness = 2;
 
         TitledBorder titleBord = BorderFactory.createTitledBorder(
             BorderFactory.createCompoundBorder(
@@ -140,8 +141,12 @@ public class Main extends JFrame {
                 int h = (int) (secs / 3600);
                 int m = (int) ((secs % 3600) / 60);
                 int s = (int) (secs % 60);
+                
+                current_label_Text = String.format("Estimated Time: %02dh %02dm %02ds", h, m, s);
 
-                Effects.labelRandomizeEffect(resultLabel,String.format("Estimated Time: %02dh %02dm %02ds", h, m, s));
+                if (!resultLabel.getText().equals(current_label_Text)) {
+                    Effects.labelRandomizeEffect(resultLabel,current_label_Text);
+                }
 
                 JButton simulate = new JButton("Simulate Download");
                     simulate.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2]));
