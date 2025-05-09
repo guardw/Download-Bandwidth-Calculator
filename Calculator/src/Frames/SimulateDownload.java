@@ -1,4 +1,4 @@
-package Calculator_Classes;
+package Frames;
 
 import javax.swing.*;
 //ysn's job
