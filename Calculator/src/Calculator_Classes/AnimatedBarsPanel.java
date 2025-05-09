@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.*;
 
 public class AnimatedBarsPanel extends JPanel {
-    private final int[] barHeights; // Heights of the bars
+    private final int[] barHeights;
     private final Random random = new Random();
 
     public AnimatedBarsPanel(int barCount) {
@@ -17,8 +17,8 @@ public class AnimatedBarsPanel extends JPanel {
 
         Timer timer = new Timer(30, e -> {
             for (int i = 0; i < barHeights.length; i++) {
-                barHeights[i] += random.nextInt(21) - 10; // Change by -10 to +10
-                barHeights[i] = Math.max(50, Math.min(150, barHeights[i])); // Clamp height
+                barHeights[i] += random.nextInt(21) - 10; 
+                barHeights[i] = Math.max(50, Math.min(150, barHeights[i])); //amp randomizer lowk aint working
             }
             repaint();
         });
@@ -33,10 +33,10 @@ public class AnimatedBarsPanel extends JPanel {
 
         int barWidth = getWidth() / barHeights.length;
         for (int i = 0; i < barHeights.length; i++) {
-            int x = i * barWidth + 5;
+            int x = i * barWidth + 5; // the damn space pmos always keep above +2 if mag adjust pls
             int y = getHeight() - barHeights[i];
             int height = barHeights[i];
-            g2d.setColor(new Color(136, 219, 139)); 
+            g2d.setColor(new Color(100, 204, 114)); 
             g2d.fillRoundRect(x, y, barWidth - 5, height,5,10); 
         }
     }
