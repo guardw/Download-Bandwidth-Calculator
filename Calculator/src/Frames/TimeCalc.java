@@ -2,6 +2,7 @@ package Frames;
 
 import Calculator_Classes.BandwidthCalculator;
 import Calculator_Classes.BitsClass;
+import Calculator_Classes.ColorPalette;
 import Calculator_Classes.Effects;
 import custom_errors.*;
 import java.awt.*;
@@ -63,11 +64,11 @@ public class TimeCalc extends JFrame {
 
         TitledBorder titleBord = BorderFactory.createTitledBorder(
             BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(BorderThickness, BorderThickness, BorderThickness, BorderThickness, new Color(0, 0, 255, 128)),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)
+            BorderFactory.createMatteBorder(BorderThickness, BorderThickness, BorderThickness, BorderThickness, ColorPalette.BORDER),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)
             )
         );
-        titleBord.setTitleColor(Color.WHITE);
+        titleBord.setTitleColor(ColorPalette.TEXT_SECONDARY);
 
         titlePanel.setBorder(titleBord);
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -107,10 +108,10 @@ public class TimeCalc extends JFrame {
             crt_conts(3, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
         // Calculate button
-        JButton calc = new JButton("Calculate Download Time");
+        JButton calc = ColorPalette.styledButton("Calculate Download Time");
         calc.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2] + 5));
-        calc.setBackground(new Color(70, 130, 180));
-        calc.setForeground(Color.white);
+        calc.setBackground(ColorPalette.BUTTON_PRIMARY);
+        calc.setForeground(ColorPalette.TEXT_SECONDARY);
         calc.setFocusPainted(true);
         mainPanel.add(calc,
             crt_conts(0, 3, 4, 1, GridBagConstraints.CENTER, defaultInsets, 0, 0));
@@ -152,10 +153,10 @@ public class TimeCalc extends JFrame {
                     Effects.labelRandomizeEffect(resultLabel, current_label_Text);
                 }
 
-                JButton simulate = new JButton("Simulate Download");
+                JButton simulate = ColorPalette.styledSecondaryButton("Simulate Download");
                 simulate.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2]));
-                simulate.setBackground(new Color(38, 163, 71));
-                simulate.setForeground(Color.white);
+                simulate.setBackground(ColorPalette.BUTTON_SECONDARY);
+                simulate.setForeground(ColorPalette.TEXT_SECONDARY);
                 simulate.setFocusPainted(true);
                 mainPanel.add(simulate,
                     crt_conts(0, 5, 5, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));

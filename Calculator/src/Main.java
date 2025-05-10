@@ -41,18 +41,18 @@ public class Main extends JFrame {
 
         JLabel titleLabel = new JLabel("Bandwidth Calculator");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
-        titleLabel.setForeground(Color.BLACK); 
+        titleLabel.setForeground(ColorPalette.TEXT_PRIMARY);
         titlePanel.add(titleLabel);
         mainPanel.add(titlePanel,
             crt_conts(0, 0, 4, 1, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 20, 0), 0, 0));
 
         Insets buttonInsets = new Insets(20, Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
 
-        JButton timec = new JButton("Download/Upload Time Calculator");
+        JButton timec = ColorPalette.styledButton("Download/Upload Time Calculator");
         timec.setFont(new Font("Arial", Font.BOLD, 15));
         timec.setPreferredSize(new Dimension(300, Settings.GUI_Sizes[2]));
-        timec.setBackground(new Color(70, 130, 180));
-        timec.setForeground(Color.white);
+        timec.setBackground(ColorPalette.BUTTON_PRIMARY);
+        timec.setForeground(ColorPalette.TEXT_SECONDARY);
         timec.setFocusPainted(false);
 
         mainPanel.add(timec,
@@ -75,11 +75,11 @@ public class Main extends JFrame {
             }
         });
 
-        JButton unitconv = new JButton("Data Unit Converter");
+        JButton unitconv = ColorPalette.styledButton("Data Unit Converter");
         unitconv.setFont(new Font("Arial", Font.BOLD, 15));
         unitconv.setPreferredSize(new Dimension(300, Settings.GUI_Sizes[2]));
-        unitconv.setBackground(new Color(70, 130, 180));
-        unitconv.setForeground(Color.white);
+        unitconv.setBackground(ColorPalette.BUTTON_PRIMARY);
+        unitconv.setForeground(ColorPalette.TEXT_SECONDARY);
         unitconv.setFocusPainted(false);
 
         DataUnitConverter unitConv_Window = new DataUnitConverter();
