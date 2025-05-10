@@ -36,7 +36,7 @@ public class AnimatedBarsPanel extends JPanel {
             int x = i * barWidth + 5; // the damn space pmos always keep above +2 if mag adjust pls
             int y = getHeight() - barHeights[i];
             int height = barHeights[i];
-            g2d.setColor(new Color(100, 204, 114)); 
+            g2d.setColor(ColorPalette.BUTTON_SECONDARY); 
             g2d.fillRoundRect(x, y, barWidth - 5, height,5,10); 
         }
     }
