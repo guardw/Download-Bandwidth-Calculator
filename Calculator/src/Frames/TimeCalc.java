@@ -170,7 +170,18 @@ public class TimeCalc extends JFrame {
                     crt_conts(0, 5, 5, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
                 simulate.addActionListener(ey -> {
-                    SimulateDownload window = new SimulateDownload();
+                    // Get hours, minutes, seconds from earlier calculation
+                    int totalSeconds = (int) Math.ceil(secs); 
+                    
+                    if (totalSeconds > 0) {
+                        SimulateDownload simulateWindow = new SimulateDownload(totalSeconds);
+                        simulateWindow.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(TimeCalc.this,
+                            "Cannot simulate - time must be greater than 0",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
                 });
 
             } catch (NumberFormatException | InvalidUnitType ex) {

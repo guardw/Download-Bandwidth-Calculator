@@ -1,7 +1,6 @@
 package Frames;
 
 import javax.swing.*;
-import Calculator_Classes.ColorPalette;
 //elie's job
 public class DataUnitConverter extends JFrame {
     public boolean Opened = false; // Set to false initially
