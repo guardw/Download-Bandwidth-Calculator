@@ -117,12 +117,40 @@ public class TimeCalc extends JFrame {
 
         calc.addActionListener(e -> {
             try {
-                double size = Double.parseDouble(sizeField.getText());
-                String unit = (String) unitBox.getSelectedItem();
-                double speed = Double.parseDouble(speedField.getText());
-                String speedUnit = (String) speedUnitBox.getSelectedItem();
+                double size;
+                String unit;
+                double speed;
+                String speedUnit;
 
-                if (size <= 0 || speed <= 0) throw new NumberFormatException("Please enter valid positive numbers.");
+                if (sizeField.getText().isEmpty()) {
+                    throw new NumberFormatException("File size cannot be empty.");
+                } else {
+                    size = Double.parseDouble(sizeField.getText());
+                    if (size <= 0) {
+                        throw new NumberFormatException("File size must be greater than 0.");
+                    }
+                }
+
+                if (unitBox.getSelectedItem() == null) {
+                    throw new IllegalArgumentException("Please select a valid file size unit.");
+                } else {
+                    unit = (String) unitBox.getSelectedItem();
+                }
+
+                if (speedField.getText().isEmpty()) {
+                    throw new NumberFormatException("Bandwidth cannot be empty.");
+                } else {
+                    speed = Double.parseDouble(speedField.getText());
+                    if (speed <= 0) {
+                        throw new NumberFormatException("Bandwidth must be greater than 0.");
+                    }
+                }
+
+                if (speedUnitBox.getSelectedItem() == null) {
+                    throw new IllegalArgumentException("Please select a valid bandwidth unit.");
+                } else {
+                    speedUnit = (String) speedUnitBox.getSelectedItem();
+                }
 
                 double mb = BitsClass.convertMB(size, unit);
                 double mbps = BitsClass.convertMBPS(speed, speedUnit);
