@@ -3,35 +3,43 @@ import Utils.GUI_Utils;
 import java.awt.*;
 import javax.swing.*;
 
-//ysn's job
 public class SimulateDownload extends JFrame {
     private JProgressBar progressBar;
+    private JLabel timeRemainingLabel; 
     private Timer timer;
     private final int secondsTotal;
-    static boolean Active = false;
-    
+    public static boolean Active = false;
+    public static boolean Finished = false;
+   
     public SimulateDownload(int totalSeconds) {
         this.secondsTotal = totalSeconds;
-        if (Active) return;
         Active = true;
+        Finished = false;
+        
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/img/icon.png")));
         setTitle("Download Simulation");
-        setSize(400, 150);
+        setSize(400, 120); 
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         mainPanel.setBackground(GUI_Utils.BACKGROUND);
 
-        // Progress bar setup
         progressBar = new JProgressBar(0, 100);
         progressBar.setStringPainted(true);
-        progressBar.setFont(new Font("Arial", Font.BOLD, 14));
+        progressBar.setFont(GUI_Utils.INTER_BOLD.deriveFont(18f));
         progressBar.setForeground(GUI_Utils.BUTTON_PRIMARY);
         progressBar.setBackground(GUI_Utils.BUTTON_SECONDARY);
         progressBar.setBorder(BorderFactory.createLineBorder(GUI_Utils.BUTTON_PRIMARY));
 
+        timeRemainingLabel = new JLabel("Time Remaining: Calculating...");
+        timeRemainingLabel.setFont(GUI_Utils.INTER_LIGHT.deriveFont(14f));
+        timeRemainingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
         mainPanel.add(progressBar, BorderLayout.CENTER);
+        mainPanel.add(timeRemainingLabel, BorderLayout.SOUTH);
 
         setContentPane(mainPanel);
         startSimulation();
@@ -42,20 +50,32 @@ public class SimulateDownload extends JFrame {
 
         timer = new Timer(50, e -> {
             long elapsed = System.currentTimeMillis() - startTime;
-            double progress = ((double) elapsed / (secondsTotal * 1000.0)) * 100.0; // Simulate a 10-second download
-            
+            double progress = ((double) elapsed / (secondsTotal * 1000.0)) * 100.0;
+
             if (progress >= 100) {
                 progressBar.setValue(100);
                 progressBar.setString("Download Complete");
+                timeRemainingLabel.setText("");
                 timer.stop();
-                Active = false;
+                Finished = true;
             } else {
                 progressBar.setValue((int) progress);
                 progressBar.setString(String.format("%.02f%%", progress));
+
+                double remainingTime = secondsTotal - (elapsed / 1000.0);
+                int h = (int) (remainingTime / 3600);
+                int m = (int) ((remainingTime % 3600) / 60);
+                int s = (int) (remainingTime % 60);
+
+                StringBuilder timeText = new StringBuilder();
+                if (h > 0) timeText.append(String.format("%02dh ", h));
+                if (m > 0) timeText.append(String.format("%02dm ", m));
+                if (s > 0 || timeText.length() == 0) timeText.append(String.format("%02ds", s));
+
+                timeRemainingLabel.setText(timeText.toString().trim());
             }
         });
         timer.start();
-
     }
 
     @Override

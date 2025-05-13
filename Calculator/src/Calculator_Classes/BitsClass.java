@@ -1,10 +1,13 @@
 package Calculator_Classes;
 import custom_errors.InvalidUnitType;
 
-// conversion twin
+// conversion & info twin
 
 public class BitsClass {
 
+    public static final String[] UNITS = {"KB", "MB", "GB", "TB"};
+    public static final String[] SPEED_UNITS = {"Kbp/s", "Mbp/s", "Gbp/s", "Tbp/s"};
+    
     public static double convertMB(double value, String unit) throws InvalidUnitType {
         System.out.println("Converting " + value + " " + unit + " to bits...");
 

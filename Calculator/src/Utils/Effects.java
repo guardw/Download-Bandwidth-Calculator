@@ -4,6 +4,8 @@ import java.awt.*;
 import java.util.Random;
 import javax.swing.*;
 
+
+// quirky effects for user interface :V
 public class Effects {
 
     private static final String[] rands_unix = {"|", "■", "■"};
@@ -44,15 +46,17 @@ public class Effects {
         private final int[] barMin;
         private final boolean[] barUp;
 
+        final int actual_max_height = 200;
+
         private final Random random = new Random();
 
         protected int rdMaxHt() {
-            int value = random.nextInt(150 - 100) + 100;
+            int value = random.nextInt(actual_max_height - actual_max_height/2) + 100;
             return Math.max(50, value);
         }
 
         protected int rdMinHt() {
-            int value = random.nextInt(99 - 0) + 0;
+            int value = random.nextInt((actual_max_height/2) - 0) + 0;
             return Math.max(0, value);
         }
 
@@ -74,9 +78,9 @@ public class Effects {
                 for (int i = 0; i < barHeights.length; i++) {
 
                     if (barUp[i]) {
-                        barHeights[i] += random.nextInt(3 - 1) + 1;
+                        barHeights[i] += random.nextInt(4 - 2) + 1;
                     } else {
-                        barHeights[i] -= random.nextInt(3 - 1) + 1;
+                        barHeights[i] -= random.nextInt(4 - 2) + 1;
                     }
 
                     if (barHeights[i] >= barMax[i]) {
@@ -102,13 +106,17 @@ public class Effects {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            int barWidth = getWidth() / barHeights.length;
+            int barWidth = getWidth() / barHeights.length; 
+            int spacing = 5; 
+            int adjustedBarWidth = barWidth - spacing; 
+
             for (int i = 0; i < barHeights.length; i++) {
-                int x = i * barWidth + 5;
-                int y = getHeight() - barHeights[i];
-                int height = barHeights[i];
+                int x = i * barWidth + spacing / 2;  // para ma balancy ang matrix brother
+                int y = getHeight() - barHeights[i]; 
+                int height = barHeights[i]; 
+
                 g2d.setColor(GUI_Utils.BUTTON_SECONDARY);
-                g2d.fillRoundRect(x, y, barWidth - 5, height, 5, 10);
+                g2d.fillRoundRect(x, y-1, adjustedBarWidth, height, 4, 10); 
             }
         }
     }

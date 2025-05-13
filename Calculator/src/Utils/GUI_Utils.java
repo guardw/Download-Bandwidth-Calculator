@@ -5,19 +5,22 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
+// Whole purpose of this class is to make making swing objects more compact to create and reduce text floods sa classes that uses it.
+
 public class GUI_Utils {
-    public static final Color BACKGROUND = new Color(255, 255, 255);
+    public static final Color BACKGROUND       = new Color(255, 255, 255);
 
-    public static final Color BUTTON_PRIMARY = new Color(229, 56, 59);
+    public static final Color BUTTON_PRIMARY   = new Color(229, 56, 59);
     public static final Color BUTTON_SECONDARY = new Color(255, 166, 167);
+    public static final Color BUTTON_ACTIVE    = new Color(255, 166, 167);
 
-    public static final Color TEXT_PRIMARY = new Color(11, 9, 10);
-    public static final Color TEXT_SECONDARY = new Color(22, 26, 29);
+    public static final Color TEXT_PRIMARY     = new Color(11, 9, 10);
+    public static final Color TEXT_SECONDARY   = new Color(22, 26, 29);
 
     public static final Color PANEL_BACKGROUND = new Color(245, 243, 244);
 
-    public static final Color BORDER = new Color(211, 211, 211);
-    public static final Color BORDER_COLOR = new Color(177, 167, 166);
+    public static final Color BORDER           = new Color(211, 211, 211);
+    public static final Color BORDER_COLOR     = new Color(177, 167, 166);
 
     public static Font INTER_LIGHT;
     public static Font INTER_BOLD;
@@ -39,7 +42,46 @@ public class GUI_Utils {
         }
     }
 
-    static JButton createButton(String text) {
+    public static GridBagConstraints create_grid_constraint(int x, int y, int width, int height, int fill, Insets insets, double spacex, double spacey) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = x;
+        c.gridy = y;
+        c.gridwidth = width;
+        c.gridheight = height;
+        c.weightx = spacex;
+        c.weighty = spacey;
+        c.fill = fill;
+        c.insets = insets;
+        return c;
+    }
+
+    public static JTextField createTextField(int width, int height, Font font) {
+        JTextField textField = new JTextField();
+        textField.setPreferredSize(new Dimension(width, height));
+        textField.setFont(font);
+        return textField;
+    }
+
+    public static <T> JComboBox<T> createComboBox(T[] items, Font font) {
+        JComboBox<T> comboBox = new JComboBox<>(items);
+        comboBox.setFont(font);
+        return comboBox;
+    }
+
+    public static JPanel createPanel(LayoutManager layout, Color bgColor) {
+        JPanel panel = new JPanel(layout);
+        panel.setBackground(bgColor);
+        return panel;
+    }
+    
+    public static JLabel createLabel(String text, Font font, Color color) {
+        JLabel label = new JLabel(text);
+        label.setFont(font);
+        label.setForeground(color);
+        return label;
+    }
+
+    public static JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
@@ -69,7 +111,7 @@ public class GUI_Utils {
 
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                button.setBackground(BUTTON_PRIMARY);
+                button.setBackground(BUTTON_ACTIVE);
             }
         });
 
@@ -94,7 +136,7 @@ public class GUI_Utils {
 
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                button.setBackground(BUTTON_SECONDARY);
+                button.setBackground(BUTTON_SECONDARY.brighter());
             }
         });
 
