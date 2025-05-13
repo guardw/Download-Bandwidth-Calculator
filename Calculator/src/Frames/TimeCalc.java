@@ -49,18 +49,17 @@ public class TimeCalc extends JFrame {
     }
 
     public TimeCalc() {
-        setTitle("Bandwidth Calculator");
+        setTitle("Download/Upload Time Calculator");
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/icon.png")));
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(ColorPalette.BACKGROUND);
-        mainPanel.setOpaque(true);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size, Settings.Border_Size, Settings.Border_Size, Settings.Border_Size));
+        mainPanel.setBackground(ColorPalette.BACKGROUND);
 
         Insets defaultInsets = new Insets(Settings.GUI_Sizes[1], Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
 
-        // Title label
+        // title ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         JPanel titlePanel = new JPanel();
         int BorderThickness = 2;
 
@@ -75,14 +74,16 @@ public class TimeCalc extends JFrame {
         titlePanel.setBorder(titleBord);
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        JLabel titleLabel = new JLabel("Bandwidth Calculator");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        JLabel titleLabel = new JLabel("Download/Upload Time Calculator");
+        titleLabel.setFont(ColorPalette.INTER_BOLD.deriveFont(18f));
         titlePanel.add(titleLabel);
         mainPanel.add(titlePanel,
             crt_conts(0, -1, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 1, 1));
 
-        // File size input
-        mainPanel.add(new JLabel("File Size:"),
+        // file size ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        JLabel file_input = new JLabel("File Size:");
+        file_input.setFont(ColorPalette.INTER_REGULAR.deriveFont(15f));
+        mainPanel.add(file_input,
             crt_conts(0, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
         sizeField = new JTextField();
@@ -95,8 +96,11 @@ public class TimeCalc extends JFrame {
         mainPanel.add(unitBox,
             crt_conts(3, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        // Speed input
-        mainPanel.add(new JLabel("Bandwidth:"),
+        // speed input ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        JLabel speed_input = new JLabel("Bandwidth");
+        speed_input.setFont(ColorPalette.INTER_REGULAR.deriveFont(15f));
+
+        mainPanel.add(speed_input,
             crt_conts(0, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
         speedField = new JTextField();
@@ -109,8 +113,9 @@ public class TimeCalc extends JFrame {
         mainPanel.add(speedUnitBox,
             crt_conts(3, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        // Calculate button
+        // calculate button -------------------------------------------------------------------------------------------------------------------------------------------------------------------
         JButton calc = ColorPalette.styledButton("Calculate Download Time");
+        calc.setFont(ColorPalette.INTER_REGULAR.deriveFont(13f));
         calc.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2] + 5));
         calc.setBackground(ColorPalette.BUTTON_PRIMARY);
         calc.setForeground(ColorPalette.TEXT_SECONDARY);
@@ -118,15 +123,13 @@ public class TimeCalc extends JFrame {
         mainPanel.add(calc,
             crt_conts(0, 3, 4, 1, GridBagConstraints.CENTER, defaultInsets, 0, 0));
 
-        // Result panel
+        // result panel ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         JPanel resultPanel = new JPanel();
-        resultPanel.setBackground(ColorPalette.PANEL_BACKGROUND);
-        resultPanel.setOpaque(true);
         resultPanel.setBorder(BorderFactory.createTitledBorder("Result"));
         resultPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         resultLabel = new JLabel("Time will be displayed here");
-        resultLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        resultLabel.setFont(ColorPalette.INTER_BOLD.deriveFont(13f));
         resultPanel.add(resultLabel);
         mainPanel.add(resultPanel,
             crt_conts(0, 4, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
@@ -158,6 +161,7 @@ public class TimeCalc extends JFrame {
                 }
 
                 JButton simulate = ColorPalette.styledSecondaryButton("Simulate Download");
+                simulate.setFont(ColorPalette.INTER_LIGHT.deriveFont(13f));
                 simulate.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2]));
                 simulate.setBackground(ColorPalette.BUTTON_SECONDARY);
                 simulate.setForeground(ColorPalette.TEXT_SECONDARY);
@@ -170,14 +174,10 @@ public class TimeCalc extends JFrame {
                 });
 
             } catch (NumberFormatException | InvalidUnitType ex) {
-                JOptionPane.showMessageDialog(TimeCalc.this,
-                    ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(TimeCalc.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        // Set the main panel as content pane
         setContentPane(mainPanel);
 
         pack();

@@ -41,10 +41,10 @@ public class Main extends JFrame {
 
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        titlePanel.setOpaque(false); // Keep transparent to show parent's background
+        titlePanel.setOpaque(false); 
 
         JLabel titleLabel = new JLabel("Bandwidth Calculator");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        titleLabel.setFont(ColorPalette.INTER_BOLD.deriveFont(32f));
         titleLabel.setForeground(ColorPalette.TEXT_PRIMARY);
         titlePanel.add(titleLabel);
         mainPanel.add(titlePanel,
@@ -53,7 +53,7 @@ public class Main extends JFrame {
         Insets buttonInsets = new Insets(20, Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
 
         JButton timec = ColorPalette.styledButton("Download/Upload Time Calculator");
-        timec.setFont(new Font("Arial", Font.BOLD, 15));
+        timec.setFont(ColorPalette.INTER_BOLD.deriveFont(15f));
         timec.setPreferredSize(new Dimension(300, Settings.GUI_Sizes[2]));
         timec.setBackground(ColorPalette.BUTTON_PRIMARY);
         timec.setForeground(ColorPalette.TEXT_SECONDARY);
@@ -80,7 +80,7 @@ public class Main extends JFrame {
         });
 
         JButton unitconv = ColorPalette.styledButton("Data Unit Converter");
-        unitconv.setFont(new Font("Arial", Font.BOLD, 15));
+        unitconv.setFont(ColorPalette.INTER_BOLD.deriveFont(15f));
         unitconv.setPreferredSize(new Dimension(300, Settings.GUI_Sizes[2]));
         unitconv.setBackground(ColorPalette.BUTTON_PRIMARY);
         unitconv.setForeground(ColorPalette.TEXT_SECONDARY);

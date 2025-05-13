@@ -1,7 +1,6 @@
 package Frames;
 
 import javax.swing.*;
-import Calculator_Classes.ColorPalette;
 //ysn's job
 public class SimulateDownload extends JFrame {
 

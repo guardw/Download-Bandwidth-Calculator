@@ -6,19 +6,55 @@ import javax.swing.*;
 
 public class AnimatedBarsPanel extends JPanel {
     private final int[] barHeights;
+    private final int[] barMax;
+    private final int[] barMin;
+    private final boolean[] barUp;
+
     private final Random random = new Random();
+
+    protected int rdMaxHt() {
+        int value = random.nextInt(150 - 100) + 100; 
+        return Math.max(50, value);
+    }
+
+    protected int rdMinHt() {
+        int value = random.nextInt(99 - 0) + 0; 
+        return Math.max(0, value);
+    }
 
     public AnimatedBarsPanel(int barCount) {
         barHeights = new int[barCount];
+        barMax     = new int[barCount];
+        barMin     = new int[barCount];
+
+        barUp      = new boolean[barCount];
+
         for (int i = 0; i < barCount; i++) {
-            int maxHeight = random.nextInt(110 - 100 + 1) + 100; 
-            barHeights[i] = random.nextInt(maxHeight - 50) + 50; 
+            barMax[i] = this.rdMaxHt();
+            barMin[i] = this.rdMinHt(); 
+
+            barHeights[i] = random.nextInt(barMax[i] - 0) + 0;
+            barUp[i] = random.nextBoolean();
         }
 
-        Timer timer = new Timer(30, e -> {
+        Timer timer = new Timer(10, e -> {
             for (int i = 0; i < barHeights.length; i++) {
-                barHeights[i] += random.nextInt(21) - 10; 
-                barHeights[i] = Math.max(50, Math.min(150, barHeights[i])); //amp randomizer lowk aint working
+                
+                if (barUp[i]) {
+                    barHeights[i] += random.nextInt(3-1) + 1; 
+                } else {barHeights[i] -= random.nextInt(3-1) + 1; }
+
+                if (barHeights[i] >= barMax[i]) {
+                    barMin[i] = this.rdMinHt(); 
+                    barUp[i] = false;
+                } else if(barHeights[i] <= barMin[i]) {
+
+                    barHeights[i] -= 1; // para murag quad animation idk
+
+                    barMax[i] = this.rdMaxHt(); 
+                    barUp[i] = true;
+                }
+
             }
             repaint();
         });
@@ -33,7 +69,7 @@ public class AnimatedBarsPanel extends JPanel {
 
         int barWidth = getWidth() / barHeights.length;
         for (int i = 0; i < barHeights.length; i++) {
-            int x = i * barWidth + 5; // the damn space pmos always keep above +2 if mag adjust pls
+            int x = i * barWidth + 5; // the damn space pmos always keep above 2 if mag adjust pls
             int y = getHeight() - barHeights[i];
             int height = barHeights[i];
             g2d.setColor(ColorPalette.BUTTON_SECONDARY); 
