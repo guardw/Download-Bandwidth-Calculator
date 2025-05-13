@@ -1,19 +1,20 @@
-import Calculator_Classes.*;
 import Frames.*;
+import Utils.*;
 import java.awt.*;
 import javax.swing.*;
 
 class Settings {
-   
-    public static final int[] GUI_Sizes = {
-        9, // Horizontal padding
-        10, // Vertical padding
+    // guys oa lagi ning vscode og variable naming :<
 
-        50, // Field height
-        400, // Minimum width
-        400 // Minimum Height
-    };
-    public static final int Border_Size = 10; // Border size
+    public static final int HORIZONTAL_PADDING = 10;
+    public static final int VERTICAL_PADDING = 10;
+
+    public static final int MINIMUM_WIDTH = 400;
+    public static final int MINIMUM_HEIGHT = 400;
+
+    public static final int BORDER_SIZE = 10;
+    public static final int GEN_BUTTON_WIDTH = 400;
+    public static final int FIELD_HEIGHT = 60;
 }
 
 public class Main extends JFrame {
@@ -22,45 +23,41 @@ public class Main extends JFrame {
         setTitle("Bandwidth Calculators");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/icon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/img/icon.png")));
 
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setLayout(new OverlayLayout(layeredPane));
-        layeredPane.setBackground(ColorPalette.BACKGROUND);
-        layeredPane.setOpaque(true); 
-
-        AnimatedBarsPanel animatedBars = new AnimatedBarsPanel(21);
+        Effects.AnimatedBarsPanel animatedBars = new Effects.AnimatedBarsPanel(22);
         animatedBars.setOpaque(false);
         animatedBars.setBounds(0, 0, 800, 600);
-        layeredPane.add(animatedBars, Integer.valueOf(0)); 
+        
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setLayout(new OverlayLayout(layeredPane));
+        layeredPane.setBackground(GUI_Utils.BACKGROUND);
+        layeredPane.setOpaque(true);
+        layeredPane.add(animatedBars, Integer.valueOf(0));
 
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setOpaque(false); 
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size, Settings.Border_Size, Settings.Border_Size, Settings.Border_Size));
-        mainPanel.setBackground(ColorPalette.BACKGROUND);
+        JPanel mainPanel = GUI_Utils.createPanel(new GridBagLayout(), GUI_Utils.BACKGROUND);
+        mainPanel.setOpaque(false);
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.BORDER_SIZE, Settings.BORDER_SIZE, Settings.BORDER_SIZE, Settings.BORDER_SIZE));
 
-        JPanel titlePanel = new JPanel();
-        titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        titlePanel.setOpaque(false); 
+        JPanel titlePanel = GUI_Utils.createPanel(new FlowLayout(FlowLayout.CENTER), null);
+        titlePanel.setOpaque(false);
 
-        JLabel titleLabel = new JLabel("Bandwidth Calculator");
-        titleLabel.setFont(ColorPalette.INTER_BOLD.deriveFont(32f));
-        titleLabel.setForeground(ColorPalette.TEXT_PRIMARY);
+        JLabel titleLabel = GUI_Utils.createLabel(
+            "Bandwidth Calculators",
+            GUI_Utils.INTER_BOLD.deriveFont(32f),
+            GUI_Utils.TEXT_PRIMARY
+        );
         titlePanel.add(titleLabel);
         mainPanel.add(titlePanel,
-            crt_conts(0, 0, 4, 1, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 20, 0), 0, 0));
+            GUI_Utils.create_grid_constraint(0, 0, 4, 1, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 20, 0), 0, 0));
 
-        Insets buttonInsets = new Insets(20, Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
+        Insets buttonInsets = new Insets(20, Settings.HORIZONTAL_PADDING, Settings.VERTICAL_PADDING, Settings.HORIZONTAL_PADDING);
 
-        JButton timec = ColorPalette.styledButton("Download/Upload Time Calculator");
-        timec.setFont(ColorPalette.INTER_BOLD.deriveFont(15f));
-        timec.setPreferredSize(new Dimension(300, Settings.GUI_Sizes[2]));
-        timec.setBackground(ColorPalette.BUTTON_PRIMARY);
-        timec.setForeground(ColorPalette.TEXT_SECONDARY);
-        timec.setFocusPainted(false);
-
+        JButton timec = GUI_Utils.styledButton("Download/Upload Time Calculator");
+        timec.setFont(GUI_Utils.INTER_BOLD.deriveFont(18f));
+        timec.setPreferredSize(new Dimension(Settings.GEN_BUTTON_WIDTH, Settings.FIELD_HEIGHT));
         mainPanel.add(timec,
-            crt_conts(0, 2, 4, 1, GridBagConstraints.CENTER, buttonInsets, 0, 0));
+            GUI_Utils.create_grid_constraint(0, 2, 4, 1, GridBagConstraints.CENTER, buttonInsets, 0, 0));
 
         TimeCalc timeCalc_Window = new TimeCalc();
         timec.addActionListener(ey -> {
@@ -75,27 +72,25 @@ public class Main extends JFrame {
 
                 timeCalc_Window.setLocation(mainX + mainWidth, mainY);
                 timeCalc_Window.setVisible(true);
+                
                 timeCalc_Window.Opened = true;
             }
         });
 
-        JButton unitconv = ColorPalette.styledButton("Data Unit Converter");
-        unitconv.setFont(ColorPalette.INTER_BOLD.deriveFont(15f));
-        unitconv.setPreferredSize(new Dimension(300, Settings.GUI_Sizes[2]));
-        unitconv.setBackground(ColorPalette.BUTTON_PRIMARY);
-        unitconv.setForeground(ColorPalette.TEXT_SECONDARY);
-        unitconv.setFocusPainted(false);
+        JButton unitconv = GUI_Utils.styledButton("Data Unit Converter");
+        unitconv.setFont(GUI_Utils.INTER_BOLD.deriveFont(18f));
+        unitconv.setPreferredSize(new Dimension(Settings.GEN_BUTTON_WIDTH, Settings.FIELD_HEIGHT));
 
         DataUnitConverter unitConv_Window = new DataUnitConverter();
-         unitconv.addActionListener(ey -> {
-             if (unitConv_Window.isVisible()) {
+        unitconv.addActionListener(ey -> {
+            if (unitConv_Window.isVisible()) {
                 unitConv_Window.setVisible(false);
             } else if (unitConv_Window.Opened) {
                 unitConv_Window.setVisible(true);
             } else {
                 int mainX = getLocation().x;
                 int mainY = getLocation().y;
-                int unitConvWidth = unitConv_Window.getWidth(); 
+                int unitConvWidth = unitConv_Window.getWidth();
 
                 unitConv_Window.setLocation(mainX - unitConvWidth, mainY);
 
@@ -105,29 +100,17 @@ public class Main extends JFrame {
         });
 
         mainPanel.add(unitconv,
-            crt_conts(0, 3, 4, 1, GridBagConstraints.CENTER, buttonInsets, 0, 0));
+            GUI_Utils.create_grid_constraint(0, 3, 4, 1, GridBagConstraints.CENTER, buttonInsets, 0, 0));
 
         layeredPane.add(mainPanel, Integer.valueOf(1));
 
         setContentPane(layeredPane);
 
         pack();
-        setMinimumSize(new Dimension(Settings.GUI_Sizes[3], Settings.GUI_Sizes[4]));
+        setMinimumSize(new Dimension(Settings.MINIMUM_WIDTH, Settings.MINIMUM_HEIGHT));
+        setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    private GridBagConstraints crt_conts(int x, int y, int width, int height, int fill, Insets insets, double spacex, double spacey) {
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = x;
-        c.gridy = y;
-        c.gridwidth = width;
-        c.gridheight = height;
-        c.weightx = spacex;
-        c.weighty = spacey;
-        c.fill = fill;
-        c.insets = insets;
-        return c;
     }
 
     public static void main(String[] args) {

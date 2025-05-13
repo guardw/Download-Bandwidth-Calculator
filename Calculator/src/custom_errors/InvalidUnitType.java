@@ -1,8 +1,8 @@
 package custom_errors;
 
-// InvalidUnitType class definition
-public class InvalidUnitType extends Exception {
+public class InvalidUnitType extends Exception { // For Bytes invalid formats like unlisted ba
     public InvalidUnitType(String unit) {
         super("Invalid unit type: " + unit);
+        System.out.println("Unhandled unit type: " + unit);
     }
 }
