@@ -54,6 +54,8 @@ public class TimeCalc extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/icon.png")));
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(ColorPalette.BACKGROUND);
+        mainPanel.setOpaque(true);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size, Settings.Border_Size, Settings.Border_Size, Settings.Border_Size));
 
         Insets defaultInsets = new Insets(Settings.GUI_Sizes[1], Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
@@ -118,6 +120,8 @@ public class TimeCalc extends JFrame {
 
         // Result panel
         JPanel resultPanel = new JPanel();
+        resultPanel.setBackground(ColorPalette.PANEL_BACKGROUND);
+        resultPanel.setOpaque(true);
         resultPanel.setBorder(BorderFactory.createTitledBorder("Result"));
         resultPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 

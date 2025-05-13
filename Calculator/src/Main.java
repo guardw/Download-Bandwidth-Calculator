@@ -26,6 +26,8 @@ public class Main extends JFrame {
 
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setLayout(new OverlayLayout(layeredPane));
+        layeredPane.setBackground(ColorPalette.BACKGROUND);
+        layeredPane.setOpaque(true); 
 
         AnimatedBarsPanel animatedBars = new AnimatedBarsPanel(21);
         animatedBars.setOpaque(false);
@@ -35,9 +37,11 @@ public class Main extends JFrame {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setOpaque(false); 
         mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size, Settings.Border_Size, Settings.Border_Size, Settings.Border_Size));
+        mainPanel.setBackground(ColorPalette.BACKGROUND);
 
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        titlePanel.setOpaque(false); // Keep transparent to show parent's background
 
         JLabel titleLabel = new JLabel("Bandwidth Calculator");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
