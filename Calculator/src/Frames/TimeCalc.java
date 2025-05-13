@@ -2,8 +2,8 @@ package Frames;
 
 import Calculator_Classes.BandwidthCalculator;
 import Calculator_Classes.BitsClass;
-import Calculator_Classes.ColorPalette;
-import Calculator_Classes.Effects;
+import Utils.Effects;
+import Utils.GUI_Utils;
 import custom_errors.*;
 import java.awt.*;
 import javax.swing.*;
@@ -51,11 +51,11 @@ public class TimeCalc extends JFrame {
     public TimeCalc() {
         setTitle("Download/Upload Time Calculator");
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/icon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/img/icon.png")));
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(Settings.Border_Size, Settings.Border_Size, Settings.Border_Size, Settings.Border_Size));
-        mainPanel.setBackground(ColorPalette.BACKGROUND);
+        mainPanel.setBackground(GUI_Utils.BACKGROUND);
 
         Insets defaultInsets = new Insets(Settings.GUI_Sizes[1], Settings.GUI_Sizes[0], Settings.GUI_Sizes[1], Settings.GUI_Sizes[0]);
 
@@ -65,24 +65,24 @@ public class TimeCalc extends JFrame {
 
         TitledBorder titleBord = BorderFactory.createTitledBorder(
             BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(BorderThickness, BorderThickness, BorderThickness, BorderThickness, ColorPalette.BORDER),
+            BorderFactory.createMatteBorder(BorderThickness, BorderThickness, BorderThickness, BorderThickness, GUI_Utils.BORDER),
             BorderFactory.createEmptyBorder(5, 5, 5, 5)
             )
         );
-        titleBord.setTitleColor(ColorPalette.TEXT_SECONDARY);
+        titleBord.setTitleColor(GUI_Utils.TEXT_SECONDARY);
 
         titlePanel.setBorder(titleBord);
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         JLabel titleLabel = new JLabel("Download/Upload Time Calculator");
-        titleLabel.setFont(ColorPalette.INTER_BOLD.deriveFont(18f));
+        titleLabel.setFont(GUI_Utils.INTER_BOLD.deriveFont(18f));
         titlePanel.add(titleLabel);
         mainPanel.add(titlePanel,
             crt_conts(0, -1, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 1, 1));
 
         // file size ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         JLabel file_input = new JLabel("File Size:");
-        file_input.setFont(ColorPalette.INTER_REGULAR.deriveFont(15f));
+        file_input.setFont(GUI_Utils.INTER_REGULAR.deriveFont(15f));
         mainPanel.add(file_input,
             crt_conts(0, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
@@ -98,7 +98,7 @@ public class TimeCalc extends JFrame {
 
         // speed input ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         JLabel speed_input = new JLabel("Bandwidth");
-        speed_input.setFont(ColorPalette.INTER_REGULAR.deriveFont(15f));
+        speed_input.setFont(GUI_Utils.INTER_REGULAR.deriveFont(15f));
 
         mainPanel.add(speed_input,
             crt_conts(0, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
@@ -114,11 +114,11 @@ public class TimeCalc extends JFrame {
             crt_conts(3, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
         // calculate button -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        JButton calc = ColorPalette.styledButton("Calculate Download Time");
-        calc.setFont(ColorPalette.INTER_REGULAR.deriveFont(13f));
+        JButton calc = GUI_Utils.styledButton("Calculate Download Time");
+        calc.setFont(GUI_Utils.INTER_REGULAR.deriveFont(13f));
         calc.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2] + 5));
-        calc.setBackground(ColorPalette.BUTTON_PRIMARY);
-        calc.setForeground(ColorPalette.TEXT_SECONDARY);
+        calc.setBackground(GUI_Utils.BUTTON_PRIMARY);
+        calc.setForeground(GUI_Utils.TEXT_SECONDARY);
         calc.setFocusPainted(true);
         mainPanel.add(calc,
             crt_conts(0, 3, 4, 1, GridBagConstraints.CENTER, defaultInsets, 0, 0));
@@ -129,7 +129,7 @@ public class TimeCalc extends JFrame {
         resultPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         resultLabel = new JLabel("Time will be displayed here");
-        resultLabel.setFont(ColorPalette.INTER_BOLD.deriveFont(13f));
+        resultLabel.setFont(GUI_Utils.INTER_BOLD.deriveFont(13f));
         resultPanel.add(resultLabel);
         mainPanel.add(resultPanel,
             crt_conts(0, 4, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
@@ -160,17 +160,28 @@ public class TimeCalc extends JFrame {
                     Effects.labelRandomizeEffect(resultLabel, current_label_Text);
                 }
 
-                JButton simulate = ColorPalette.styledSecondaryButton("Simulate Download");
-                simulate.setFont(ColorPalette.INTER_LIGHT.deriveFont(13f));
+                JButton simulate = GUI_Utils.styledSecondaryButton("Simulate Download");
+                simulate.setFont(GUI_Utils.INTER_LIGHT.deriveFont(13f));
                 simulate.setPreferredSize(new Dimension(200, Settings.GUI_Sizes[2]));
-                simulate.setBackground(ColorPalette.BUTTON_SECONDARY);
-                simulate.setForeground(ColorPalette.TEXT_SECONDARY);
+                simulate.setBackground(GUI_Utils.BUTTON_SECONDARY);
+                simulate.setForeground(GUI_Utils.TEXT_SECONDARY);
                 simulate.setFocusPainted(true);
                 mainPanel.add(simulate,
                     crt_conts(0, 5, 5, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
                 simulate.addActionListener(ey -> {
-                    SimulateDownload window = new SimulateDownload();
+                    // Get hours, minutes, seconds from earlier calculation
+                    int totalSeconds = (int) Math.ceil(secs); 
+                    
+                    if (totalSeconds > 0) {
+                        SimulateDownload simulateWindow = new SimulateDownload(totalSeconds);
+                        simulateWindow.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(TimeCalc.this,
+                            "Cannot simulate - time must be greater than 0",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
                 });
 
             } catch (NumberFormatException | InvalidUnitType ex) {
