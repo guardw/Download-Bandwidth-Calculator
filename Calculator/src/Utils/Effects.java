@@ -12,6 +12,9 @@ public class Effects {
     private static final int max_count = rands_unix.length - 1;
 
     public static void labelRandomizeEffect(JLabel label, String finalText) {
+
+        if (label.getText().equals(finalText)) {return;}
+
         StringBuilder train = new StringBuilder();
         StringBuilder builtText = new StringBuilder();
 

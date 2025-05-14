@@ -17,7 +17,7 @@ class Settings {
 
     public static final int BORDER_SIZE = 10;
     public static final int GEN_BUTTON_WIDTH = 400;
-    public static final int FIELD_HEIGHT = 25;
+    public static final int FIELD_HEIGHT = 30;
 }
 
 public class TimeCalc extends JFrame {
@@ -48,12 +48,13 @@ public class TimeCalc extends JFrame {
         titlePanel.add(titleLabel);
         mainPanel.add(titlePanel, 
         GUI_Utils.create_grid_constraint(0, 0, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 1, 1));
-
+        
+        // ------- File Size -------
         JLabel fileInputLabel = GUI_Utils.createLabel("File Size:", GUI_Utils.INTER_REGULAR.deriveFont(12f), GUI_Utils.TEXT_PRIMARY);
         mainPanel.add(fileInputLabel, 
             GUI_Utils.create_grid_constraint(0, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        sizeField = GUI_Utils.createTextField(150, Settings.FIELD_HEIGHT, GUI_Utils.INTER_REGULAR);
+        sizeField = GUI_Utils.createTextField(150, Settings.FIELD_HEIGHT, GUI_Utils.INTER_REGULAR.deriveFont(12f));
         mainPanel.add(sizeField, 
             GUI_Utils.create_grid_constraint(1, 1, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
@@ -62,11 +63,13 @@ public class TimeCalc extends JFrame {
         mainPanel.add(unitBox, 
             GUI_Utils.create_grid_constraint(3, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
+
+        // ------- Bandwidth -------
         JLabel speedInputLabel = GUI_Utils.createLabel("Bandwidth:", GUI_Utils.INTER_REGULAR.deriveFont(12f), GUI_Utils.TEXT_PRIMARY);
         mainPanel.add(speedInputLabel, 
             GUI_Utils.create_grid_constraint(0, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        speedField = GUI_Utils.createTextField(150, Settings.FIELD_HEIGHT, GUI_Utils.INTER_REGULAR);
+        speedField = GUI_Utils.createTextField(150, Settings.FIELD_HEIGHT, GUI_Utils.INTER_REGULAR.deriveFont(12f));
         mainPanel.add(speedField, 
             GUI_Utils.create_grid_constraint(1, 2, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
@@ -74,7 +77,8 @@ public class TimeCalc extends JFrame {
         speedUnitBox.setPreferredSize(new Dimension(80, Settings.FIELD_HEIGHT));
         mainPanel.add(speedUnitBox, 
             GUI_Utils.create_grid_constraint(3, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
-
+        
+        // ------- Simulate -------
         simulate = GUI_Utils.styledSecondaryButton("Simulate Download");
         simulate.setFont(GUI_Utils.INTER_LIGHT.deriveFont(13f));
         simulate.setForeground(GUI_Utils.TEXT_SECONDARY);
@@ -82,6 +86,7 @@ public class TimeCalc extends JFrame {
         mainPanel.add(simulate, 
             GUI_Utils.create_grid_constraint(0, 5, 5, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
+        // Handling stuff
         simulate.addActionListener(ey -> {
             if (SimulateDownload.Finished && SimulateDownload.Active) {
                 currentSimWindow.dispose();
@@ -163,9 +168,7 @@ public class TimeCalc extends JFrame {
 
                 current_label_Text = String.format("Estimated Time: %02dh %02dm %02ds", h, m, s);
 
-                if (!resultLabel.getText().equals(current_label_Text)) {
-                    Effects.labelRandomizeEffect(resultLabel, current_label_Text);
-                }
+                Effects.labelRandomizeEffect(resultLabel, current_label_Text);
 
                 simulate.putClientProperty("totalSeconds", (double) Math.round(secs));
                 simulate.setVisible(true);

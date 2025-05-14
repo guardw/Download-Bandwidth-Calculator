@@ -5,7 +5,9 @@ import custom_errors.InvalidUnitType;
 
 public class BitsClass {
 
-    public static final String[] UNITS = {"KB", "MB", "GB", "TB"};
+    public static final String[] UNITS   = {"KB", "MB", "GB", "TB"};
+    public static final Double[] UNITS_BASE = {0.0009765625, 1.0, 1024.0, 1_048_576.0};
+
     public static final String[] SPEED_UNITS = {"Kbp/s", "Mbp/s", "Gbp/s", "Tbp/s"};
     
     public static double convertMB(double value, String unit) throws InvalidUnitType {
@@ -43,6 +45,30 @@ public class BitsClass {
             default:
                 throw new InvalidUnitType("Invalid unit: " + unit);
         }
+    }
+
+    public static double convert(double value, String base, String into) throws InvalidUnitType {
+        base = base.toUpperCase();
+        into = into.toUpperCase();
+
+        int from_dex = -1;
+        int to_dex = -1;
+
+        for (int i = 0; i < UNITS.length; i++) {
+            if (UNITS[i].equals(base)) {
+                from_dex = i;
+            }
+            if (UNITS[i].equals(into)) {
+                to_dex = i;
+            }
+        }
+
+        if (from_dex == -1 || to_dex == -1) {
+            throw new InvalidUnitType("Invalid unit: " + (from_dex == -1 ? base : into));
+        }
+
+        double valueInMB = value * UNITS_BASE[from_dex];
+        return valueInMB / UNITS_BASE[to_dex];
     }
 
 }
