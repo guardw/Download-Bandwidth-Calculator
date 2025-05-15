@@ -36,5 +36,6 @@ Convert data values between different units using either:
 - **Decimal standard** (1 MB = 1000 KB)
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/22076b3e-fb84-45a8-9b41-0cd6e893003f" alt="Unit Converter" />
+  <img src="https://github.com/user-attachments/assets/5804e6c8-d53e-41df-b56a-88111c14fbb6" alt="Unit Converter" />
 </div>
+
