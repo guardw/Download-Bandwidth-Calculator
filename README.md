@@ -2,7 +2,10 @@
 
 A user-friendly web application that helps you convert data units and calculate download/upload times based on file size and internet speed.
 
-![App Overview](https://github.com/user-attachments/assets/74b25259-0db1-4ea3-8b38-9b5f5b67201a)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c0f186f0-1c4d-4976-a39d-c7930d14266f" alt="Recording 2025-05-15 224822" />
+</div>
+
 
 ---
 
@@ -14,11 +17,15 @@ Easily calculate how long it will take to download or upload a file based on:
 - File size (in KB, MB, GB, TB)
 - Bandwidth (in Kbit/s, Mbit/s, Tbit/s)
 
-![Time Calculator](https://github.com/user-attachments/assets/ccedeb42-c260-418e-8ce4-36e1cda24040)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/ccedeb42-c260-418e-8ce4-36e1cda24040" alt="Time Calculator" />
+</div>
 
 Includes an option to simulate your download speed for more realistic results.
 
-![Speed Simulation](https://github.com/user-attachments/assets/b60d764b-30b7-4b08-8995-8607832a742f)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/b60d764b-30b7-4b08-8995-8607832a742f" alt="Speed Simulation" />
+</div>
 
 ---
 
@@ -28,4 +35,6 @@ Convert data values between different units using either:
 - **Binary standard** (1 MB = 1024 KB)
 - **Decimal standard** (1 MB = 1000 KB)
 
-![Unit Converter](https://github.com/user-attachments/assets/22076b3e-fb84-45a8-9b41-0cd6e893003f)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/22076b3e-fb84-45a8-9b41-0cd6e893003f" alt="Unit Converter" />
+</div>
