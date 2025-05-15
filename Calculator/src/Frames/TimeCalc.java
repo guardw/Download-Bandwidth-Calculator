@@ -26,7 +26,9 @@ public class TimeCalc extends JFrame {
     private JTextField speedField;
     private JLabel resultLabel;
     private JComboBox<String> speedUnitBox;
+
     private String current_label_Text;
+    private double current_secs;
     private JButton simulate;
     private SimulateDownload currentSimWindow;
 
@@ -50,30 +52,30 @@ public class TimeCalc extends JFrame {
         GUI_Utils.create_grid_constraint(0, 0, 4, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 1, 1));
         
         // ------- File Size -------
-        JLabel fileInputLabel = GUI_Utils.createLabel("File Size:", GUI_Utils.INTER_REGULAR.deriveFont(12f), GUI_Utils.TEXT_PRIMARY);
+        JLabel fileInputLabel = GUI_Utils.createLabel("File Size:", GUI_Utils.INTER_REGULAR.deriveFont(15f), GUI_Utils.TEXT_PRIMARY);
         mainPanel.add(fileInputLabel, 
             GUI_Utils.create_grid_constraint(0, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        sizeField = GUI_Utils.createTextField(150, Settings.FIELD_HEIGHT, GUI_Utils.INTER_REGULAR.deriveFont(12f));
+        sizeField = GUI_Utils.createTextField(150, Settings.FIELD_HEIGHT, GUI_Utils.INTER_REGULAR.deriveFont(13f));
         mainPanel.add(sizeField, 
             GUI_Utils.create_grid_constraint(1, 1, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        unitBox = GUI_Utils.createComboBox(BitsClass.UNITS, GUI_Utils.INTER_REGULAR.deriveFont(12f));
+        unitBox = GUI_Utils.createComboBox(BitsClass.UNITS, GUI_Utils.INTER_REGULAR.deriveFont(15f));
         unitBox.setPreferredSize(new Dimension(80, Settings.FIELD_HEIGHT));
         mainPanel.add(unitBox, 
             GUI_Utils.create_grid_constraint(3, 1, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
 
         // ------- Bandwidth -------
-        JLabel speedInputLabel = GUI_Utils.createLabel("Bandwidth:", GUI_Utils.INTER_REGULAR.deriveFont(12f), GUI_Utils.TEXT_PRIMARY);
+        JLabel speedInputLabel = GUI_Utils.createLabel("Bandwidth:", GUI_Utils.INTER_REGULAR.deriveFont(15f), GUI_Utils.TEXT_PRIMARY);
         mainPanel.add(speedInputLabel, 
             GUI_Utils.create_grid_constraint(0, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        speedField = GUI_Utils.createTextField(150, Settings.FIELD_HEIGHT, GUI_Utils.INTER_REGULAR.deriveFont(12f));
+        speedField = GUI_Utils.createTextField(150, Settings.FIELD_HEIGHT, GUI_Utils.INTER_REGULAR.deriveFont(13f));
         mainPanel.add(speedField, 
             GUI_Utils.create_grid_constraint(1, 2, 2, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        speedUnitBox = GUI_Utils.createComboBox(BitsClass.SPEED_UNITS, GUI_Utils.INTER_REGULAR.deriveFont(12f));
+        speedUnitBox = GUI_Utils.createComboBox(BitsClass.SPEED_UNITS, GUI_Utils.INTER_REGULAR.deriveFont(15f));
         speedUnitBox.setPreferredSize(new Dimension(80, Settings.FIELD_HEIGHT));
         mainPanel.add(speedUnitBox, 
             GUI_Utils.create_grid_constraint(3, 2, 1, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
@@ -88,14 +90,12 @@ public class TimeCalc extends JFrame {
 
         // Handling stuff
         simulate.addActionListener(ey -> {
-            if (SimulateDownload.Finished && SimulateDownload.Active) {
-                currentSimWindow.dispose();
-            }
-            if (SimulateDownload.Active) {
-                return;
-            }
+            if (SimulateDownload.Finished && SimulateDownload.Active) {currentSimWindow.dispose();}
+            if (SimulateDownload.Active) {return;}
 
             try {
+                if (resultLabel.getText().equals("Time will be displayed here")) {throw new ArithmeticException("Result time is empty!");}
+
                 double totalSeconds = Double.parseDouble(simulate.getClientProperty("totalSeconds").toString());
 
                 if (totalSeconds > 0) {
@@ -126,6 +126,9 @@ public class TimeCalc extends JFrame {
                 String unit;
                 double speed;
                 String speedUnit;
+
+                GUI_Utils.ErrorHasText(sizeField.getText().trim());
+                GUI_Utils.ErrorHasText(speedField.getText().trim());
 
                 if (sizeField.getText().isEmpty()) {
                     throw new NumberFormatException("File size cannot be empty.");
@@ -160,17 +163,17 @@ public class TimeCalc extends JFrame {
                 double mb = BitsClass.convertMB(size, unit);
                 double mbps = BitsClass.convertMBPS(speed, speedUnit);
 
-                double secs = SpeedCalc.calculate(mb, mbps);
+                current_secs = SpeedCalc.calculate(mb, mbps);
 
-                int h = (int) (secs / 3600);
-                int m = (int) ((secs % 3600) / 60);
-                int s = (int) (secs % 60);
+                int h = (int) (current_secs / 3600);
+                int m = (int) ((current_secs % 3600) / 60);
+                int s = (int) (current_secs % 60);
 
                 current_label_Text = String.format("Estimated Time: %02dh %02dm %02ds", h, m, s);
 
                 Effects.labelRandomizeEffect(resultLabel, current_label_Text);
 
-                simulate.putClientProperty("totalSeconds", (double) Math.round(secs));
+                simulate.putClientProperty("totalSeconds", (double) Math.round(current_secs));
                 simulate.setVisible(true);
 
             } catch (NumberFormatException | InvalidUnitType ex) {
@@ -186,5 +189,6 @@ public class TimeCalc extends JFrame {
         setContentPane(mainPanel);
         pack();
         setMinimumSize(new Dimension(Settings.MINIMUM_WIDTH, Settings.MINIMUM_HEIGHT));
+        setResizable(false);
     }
 }

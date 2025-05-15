@@ -5,12 +5,15 @@ import custom_errors.InvalidUnitType;
 
 public class BitsClass {
 
+    public static final String[] UNIT_TYPES = {"Binary", "Decimal"};
     public static final String[] UNITS   = {"KB", "MB", "GB", "TB"};
-    public static final Double[] UNITS_BASE = {0.0009765625, 1.0, 1024.0, 1_048_576.0};
 
-    public static final String[] SPEED_UNITS = {"Kbp/s", "Mbp/s", "Gbp/s", "Tbp/s"};
+    public static final Double[] UNITS_BASE = {0.0009765625, 1.0, 1024.0, 1_048_576.0};
+    public static final Double[] UNITS_BASE2 = {1.0, 1_000.0, 1_000_000.0, 1_000_000_000.0, 1_000_000_000_000.0}; // to decimal
+
+    public static final String[] SPEED_UNITS = {"Kbp/s", "Mbp/s", "Gbp/s", "Tbp/s"}; // bits ni ha dili bytes 
     
-    public static double convertMB(double value, String unit) throws InvalidUnitType {
+    public static double convertMB(double value, String unit) throws InvalidUnitType { 
         System.out.println("Converting " + value + " " + unit + " to bits...");
 
         unit = unit.toUpperCase();
@@ -47,7 +50,7 @@ public class BitsClass {
         }
     }
 
-    public static double convert(double value, String base, String into) throws InvalidUnitType {
+    public static double convert(double value, String base, String into, String type) throws InvalidUnitType {
         base = base.toUpperCase();
         into = into.toUpperCase();
 
@@ -67,8 +70,15 @@ public class BitsClass {
             throw new InvalidUnitType("Invalid unit: " + (from_dex == -1 ? base : into));
         }
 
-        double valueInMB = value * UNITS_BASE[from_dex];
-        return valueInMB / UNITS_BASE[to_dex];
+        Double[] baseArray;
+        if (type.equalsIgnoreCase("Decimal")) {
+            baseArray = UNITS_BASE2;
+        } else {
+            baseArray = UNITS_BASE;
+        }
+
+        double valueInMB = value * baseArray[from_dex];
+        return valueInMB / baseArray[to_dex];
     }
 
 }

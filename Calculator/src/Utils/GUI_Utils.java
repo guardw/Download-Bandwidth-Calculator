@@ -143,6 +143,18 @@ public class GUI_Utils {
         button.setUI(new RoundedButtonUI());
         return button;
     }
+
+    public static void ErrorHasText(String x) throws NumberFormatException {
+        StringBuilder temp = new StringBuilder();
+            for (char c : x.toCharArray()) {
+                if (!Character.isDigit(c) && c != '.' && c != '-') {
+                    temp.append(c);
+                }
+            }
+        if (!temp.toString().isEmpty()) {
+            throw new NumberFormatException("Input contains: " + temp.toString());
+        }
+    }
 }
 
 class RoundedButtonUI extends javax.swing.plaf.basic.BasicButtonUI {

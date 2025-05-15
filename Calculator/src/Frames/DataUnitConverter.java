@@ -21,9 +21,11 @@ class Settings {
 
 public class DataUnitConverter extends JFrame {
     private JTextField inputField;
-    private JComboBox<String> comboFrom, comboTo;
+    private JComboBox<String> comboFrom, comboTo, unitType;
     private JLabel resultLabel;
+    private double inputValue;
 
+    private boolean hasResult = false;
     public boolean Opened = false;
 
     public DataUnitConverter() {
@@ -32,7 +34,7 @@ public class DataUnitConverter extends JFrame {
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setMinimumSize(new Dimension(Settings.MINIMUM_WIDTH, Settings.MINIMUM_HEIGHT));
         setLayout(new GridBagLayout());
-        setLocationRelativeTo(null);
+        setResizable(false);
 
         Insets fieldInsets = new Insets(Settings.VERTICAL_PADDING, Settings.HORIZONTAL_PADDING, Settings.VERTICAL_PADDING, Settings.HORIZONTAL_PADDING);
         Insets buttonInsets = new Insets(20, Settings.HORIZONTAL_PADDING, Settings.VERTICAL_PADDING, Settings.HORIZONTAL_PADDING);
@@ -78,42 +80,59 @@ public class DataUnitConverter extends JFrame {
         mainPanel.add(resultLabel, 
             GUI_Utils.create_grid_constraint(0, 4, 3, 1, GridBagConstraints.HORIZONTAL, fieldInsets, 0, 0));
 
-        convertButton.addActionListener(e -> performConversion());
+        unitType = GUI_Utils.createComboBox(BitsClass.UNIT_TYPES, GUI_Utils.INTER_REGULAR);
+        mainPanel.add(unitType, 
+            GUI_Utils.create_grid_constraint(2, 4, 1, 1, GridBagConstraints.HORIZONTAL, fieldInsets, 0, 0));
+
+        unitType.addActionListener(e -> {
+            if (hasResult) {
+                System.out.println("Switched to " + unitType.getSelectedItem());
+                performConversion(false);
+            }
+        });
+        convertButton.addActionListener(e -> performConversion(true));
         clearButton.addActionListener(e -> clearFields());
 
         setContentPane(mainPanel);
         pack();
     }
 
-    private void performConversion() {
+    private void performConversion(boolean check_input) {
         try {
             String inputText = inputField.getText().trim();
             
-            if (inputText.isEmpty()) {
-                throw new NumberFormatException("Please enter a value to convert.");
-            }
+            GUI_Utils.ErrorHasText(inputText);
 
-            double inputValue = Double.parseDouble(inputText);
+            if (inputText.isEmpty() & check_input) {
+                throw new NumberFormatException("Please enter a value to convert.");
+            } else if (check_input) {
+                inputValue = Double.parseDouble(inputText);
+            } // if not checked it will use last input.
+
             if (inputValue <= 0) {
                 throw new NumberFormatException("Value must be greater than 0.");
             }
 
-            if (comboFrom.getSelectedItem() == null) {
-                throw new IllegalArgumentException("Please select a valid 'From' unit.");
-            }
-
-            if (comboTo.getSelectedItem() == null) {
-                throw new IllegalArgumentException("Please select a valid 'To' unit.");
-            }
 
             String from = (String) comboFrom.getSelectedItem();
             String to = (String) comboTo.getSelectedItem();
+            String type = (String) unitType.getSelectedItem();
 
-            double result = BitsClass.convert(inputValue, from, to);
+            double result = BitsClass.convert(inputValue, from, to, type);
+            hasResult = true;
 
-            Effects.labelRandomizeEffect(resultLabel, String.format("Result: %.6g %s", result, to));
+            String resultStr = String.format("%.6g", result); 
+            String display = String.format("Result: %s %s", resultStr, to);
+
+            int maxLen = 22; 
+            if (display.length() > maxLen) {
+                display = display.substring(0, maxLen) + "...";
+            }
+
+            Effects.labelRandomizeEffect(resultLabel, display);
 
         } catch (Exception ex) {
+           System.out.println("error: " + ex.getClass().getCanonicalName());
            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -121,6 +140,7 @@ public class DataUnitConverter extends JFrame {
     private void clearFields() {
         inputField.setText("");
         resultLabel.setText("Result: ");
+        hasResult = false;
     }
 
 }
