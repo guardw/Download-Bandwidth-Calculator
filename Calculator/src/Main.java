@@ -1,11 +1,22 @@
 import Frames.*;
 import Utils.*;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
+import javax.swing.SwingUtilities;
 
-class Settings {
-    // guys oa lagi ning vscode og variable naming :<
-
+class Settings { // guys oa lagi ning vscode og variable naming :<
+    
     public static final int HORIZONTAL_PADDING = 10;
     public static final int VERTICAL_PADDING = 10;
 

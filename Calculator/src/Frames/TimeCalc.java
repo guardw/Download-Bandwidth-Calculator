@@ -4,9 +4,21 @@ import Calculator_Classes.BandwidthCalculator;
 import Calculator_Classes.BitsClass;
 import Utils.Effects;
 import Utils.GUI_Utils;
-import custom_errors.*;
-import java.awt.*;
-import javax.swing.*;
+import custom_errors.InvalidUnitType;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 class Settings {
     public static final int HORIZONTAL_PADDING = 9;
@@ -88,7 +100,7 @@ public class TimeCalc extends JFrame {
         mainPanel.add(simulate, 
             GUI_Utils.create_grid_constraint(0, 5, 5, 1, GridBagConstraints.HORIZONTAL, defaultInsets, 0, 0));
 
-        // Handling stuff
+        // Handling simulated window properties
         simulate.addActionListener(ey -> {
             if (SimulateDownload.Finished && SimulateDownload.Active) {currentSimWindow.dispose();}
             if (SimulateDownload.Active) {return;}
@@ -120,6 +132,7 @@ public class TimeCalc extends JFrame {
         calc.setPreferredSize(new Dimension(200, Settings.FIELD_HEIGHT + 5));
         mainPanel.add(calc, GUI_Utils.create_grid_constraint(0, 3, 4, 1, GridBagConstraints.CENTER, defaultInsets, 0, 0));
 
+        // where the magic for estimated time calc
         calc.addActionListener(e -> {
             try {
                 double size;

@@ -1,13 +1,17 @@
 package Utils;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.Random;
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 // quirky effects for user interface :V
 public class Effects {
 
-    private static final String[] rands_unix = {"|", "■", "■"};
+    private static final String[] rands_unix = {"|", "■", "■"}; // train like anim.... goated.
     private static final int max_count = rands_unix.length - 1;
 
     public static void labelRandomizeEffect(JLabel label, String finalText) {
@@ -42,7 +46,7 @@ public class Effects {
         timer.start();
     }
 
-    public static class AnimatedBarsPanel extends JPanel {
+    public static class AnimatedBarsPanel extends JPanel { // Bars 🔥
         private final int[] barHeights;
         private final int[] barMax;
         private final int[] barMin;
@@ -103,7 +107,7 @@ public class Effects {
         }
 
         @Override
-        protected void paintComponent(Graphics g) {
+        protected void paintComponent(Graphics g) { // render/animate the bars
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

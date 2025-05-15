@@ -1,7 +1,15 @@
 package Frames;
+
 import Utils.GUI_Utils;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 public class SimulateDownload extends JFrame {
     private JProgressBar progressBar;

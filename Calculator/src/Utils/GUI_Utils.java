@@ -1,8 +1,25 @@
 package Utils;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.LayoutManager;
+import java.awt.RenderingHints;
 import java.io.IOException;
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
 // Whole purpose of this class is to make making swing objects more compact to create and reduce text floods sa classes that uses it.
@@ -144,7 +161,7 @@ public class GUI_Utils {
         return button;
     }
 
-    public static void ErrorHasText(String x) throws NumberFormatException {
+    public static void ErrorHasText(String x) throws NumberFormatException { // Method version for text boxes if it has non number (it was getting bloated)
         StringBuilder temp = new StringBuilder();
             for (char c : x.toCharArray()) {
                 if (!Character.isDigit(c) && c != '.' && c != '-') {

@@ -1,10 +1,20 @@
 package Frames;
 
-import Calculator_Classes.*;
+import Calculator_Classes.BitsClass;
 import Utils.Effects;
 import Utils.GUI_Utils;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 class Settings {
     public static final int HORIZONTAL_PADDING = 10;
