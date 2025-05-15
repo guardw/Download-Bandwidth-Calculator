@@ -1,6 +1,6 @@
 # Bandwidth Calculators
 
-A user-friendly web application that helps you convert data units and calculate download/upload times based on file size and internet speed.
+A user-friendly application that helps you convert data units and calculate download/upload times based on file size and internet speed.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/c0f186f0-1c4d-4976-a39d-c7930d14266f" alt="Recording 2025-05-15 224822" />
@@ -15,7 +15,7 @@ A user-friendly web application that helps you convert data units and calculate 
 
 Easily calculate how long it will take to download or upload a file based on:
 - File size (in KB, MB, GB, TB)
-- Bandwidth (in Kbit/s, Mbit/s, Tbit/s)
+- Bandwidth (in Kbit/s, Mbit/s, Gbit/s, Tbit/s)
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/ccedeb42-c260-418e-8ce4-36e1cda24040" alt="Time Calculator" />
@@ -36,5 +36,6 @@ Convert data values between different units using either:
 - **Decimal standard** (1 MB = 1000 KB)
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/22076b3e-fb84-45a8-9b41-0cd6e893003f" alt="Unit Converter" />
+  <img src="https://github.com/user-attachments/assets/5804e6c8-d53e-41df-b56a-88111c14fbb6" alt="Unit Converter" />
 </div>
+
