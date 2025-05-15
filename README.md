@@ -12,7 +12,7 @@ Easily calculate how long it will take to download or upload a file based on:
 - File size (in KB, MB, GB, TB)
 - Bandwidth (in Kbit/s, Mbit/s, Tbit/s)
 
-![image](https://github.com/user-attachments/assets/ccedeb42-c260-418e-8ce4-36e1cda24040)
+###![image](https://github.com/user-attachments/assets/ccedeb42-c260-418e-8ce4-36e1cda24040)
 
 - Also includes an option to simulate your download speed!
  ![image](https://github.com/user-attachments/assets/b60d764b-30b7-4b08-8995-8607832a742f)
