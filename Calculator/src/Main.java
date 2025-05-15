@@ -80,7 +80,10 @@ public class Main extends JFrame {
         JButton unitconv = GUI_Utils.styledButton("Data Unit Converter");
         unitconv.setFont(GUI_Utils.INTER_BOLD.deriveFont(18f));
         unitconv.setPreferredSize(new Dimension(Settings.GEN_BUTTON_WIDTH, Settings.FIELD_HEIGHT));
-
+        
+        mainPanel.add(unitconv,
+            GUI_Utils.create_grid_constraint(0, 3, 4, 1, GridBagConstraints.CENTER, buttonInsets, 0, 0));
+        
         DataUnitConverter unitConv_Window = new DataUnitConverter();
         unitconv.addActionListener(ey -> {
             if (unitConv_Window.isVisible()) {
@@ -99,9 +102,6 @@ public class Main extends JFrame {
             }
         });
 
-        mainPanel.add(unitconv,
-            GUI_Utils.create_grid_constraint(0, 3, 4, 1, GridBagConstraints.CENTER, buttonInsets, 0, 0));
-
         layeredPane.add(mainPanel, Integer.valueOf(1));
 
         setContentPane(layeredPane);
@@ -115,5 +115,6 @@ public class Main extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Main());
+
     }
 }

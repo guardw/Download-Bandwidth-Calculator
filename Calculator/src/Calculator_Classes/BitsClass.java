@@ -6,12 +6,12 @@ import custom_errors.InvalidUnitType;
 public class BitsClass {
 
     public static final String[] UNIT_TYPES = {"Binary", "Decimal"};
-    public static final String[] UNITS   = {"KB", "MB", "GB", "TB"};
+    public static final String[] UNITS   = {"KB", "MB", "GB", "TB",}; // KB - KiloBytes kb - kilobits
 
     public static final Double[] UNITS_BASE = {0.0009765625, 1.0, 1024.0, 1_048_576.0};
     public static final Double[] UNITS_BASE2 = {1.0, 1_000.0, 1_000_000.0, 1_000_000_000.0, 1_000_000_000_000.0}; // to decimal
 
-    public static final String[] SPEED_UNITS = {"Kbp/s", "Mbp/s", "Gbp/s", "Tbp/s"}; // bits ni ha dili bytes 
+    public static final String[] SPEED_UNITS = {"Kbit/s", "Mbit/s", "Gbit/s", "Tbit/s"}; // bits ni ha dili bytes 
     
     public static double convertMB(double value, String unit) throws InvalidUnitType { 
         System.out.println("Converting " + value + " " + unit + " to bits...");
@@ -19,13 +19,13 @@ public class BitsClass {
         unit = unit.toUpperCase();
         switch (unit) {
             case "KB":
-                return value / 1024; 
+                return value * UNITS_BASE[0]; 
             case "MB":
-                return value; 
+                return value * UNITS_BASE[1]; 
             case "GB":
-                return value * 1024; 
+                return value * UNITS_BASE[2]; 
             case "TB":
-                return value * 1_048_576; 
+                return value * UNITS_BASE[3]; 
             default:
                 throw new InvalidUnitType("Invalid unit: " + unit);
         }
@@ -37,13 +37,13 @@ public class BitsClass {
         unit = unit.toUpperCase();
     
         switch (unit) {
-            case "KBP/S": 
+            case "KBIT/S": 
                 return value / 1000;
-            case "MBP/S": 
+            case "MBIT/S": 
                 return value;
-            case "GBP/S": 
+            case "GBIT/S": 
                 return value * 1000;
-            case "TBP/S": 
+            case "TBIT/S": 
                 return value * 1_000_000;
             default:
                 throw new InvalidUnitType("Invalid unit: " + unit);

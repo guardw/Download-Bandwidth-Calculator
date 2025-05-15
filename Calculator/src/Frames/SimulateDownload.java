@@ -15,17 +15,15 @@ public class SimulateDownload extends JFrame {
         this.secondsTotal = totalSeconds;
         Active = true;
         Finished = false;
-        
+
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/img/icon.png")));
         setTitle("Download Simulation");
-        setSize(390, 120); 
-        setLocationRelativeTo(null);
+        setSize(390, 120);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel mainPanel = GUI_Utils.createPanel(new BorderLayout(), GUI_Utils.BACKGROUND);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        mainPanel.setBackground(GUI_Utils.BACKGROUND);
 
         progressBar = new JProgressBar(0, 100);
         progressBar.setStringPainted(true);
@@ -34,8 +32,7 @@ public class SimulateDownload extends JFrame {
         progressBar.setBackground(GUI_Utils.BUTTON_SECONDARY);
         progressBar.setBorder(BorderFactory.createLineBorder(GUI_Utils.BUTTON_PRIMARY));
 
-        timeRemainingLabel = new JLabel("Time Remaining: Calculating...");
-        timeRemainingLabel.setFont(GUI_Utils.INTER_LIGHT.deriveFont(14f));
+        timeRemainingLabel = GUI_Utils.createLabel("Time Remaining: Calculating...", GUI_Utils.INTER_LIGHT.deriveFont(14f), GUI_Utils.TEXT_PRIMARY);
         timeRemainingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         mainPanel.add(progressBar, BorderLayout.CENTER);
