@@ -110,7 +110,7 @@ public class TimeCalc extends JFrame {
 
                 double totalSeconds = Double.parseDouble(simulate.getClientProperty("totalSeconds").toString());
 
-                if (totalSeconds > 0) {
+                if (Math.round(totalSeconds) > 0) {
                     currentSimWindow = new SimulateDownload((int) totalSeconds);
                     currentSimWindow.setVisible(true);
 
