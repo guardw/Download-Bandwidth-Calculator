@@ -56,7 +56,7 @@ public class Main extends JFrame {
         JLabel titleLabel = GUI_Utils.createLabel(
             "Bandwidth Calculators",
             GUI_Utils.INTER_BOLD.deriveFont(32f),
-            GUI_Utils.TEXT_PRIMARY
+            GUI_Utils.TEXT_PRIMARY 
         );
         titlePanel.add(titleLabel);
         mainPanel.add(titlePanel,
@@ -80,6 +80,7 @@ public class Main extends JFrame {
                 int mainX = getLocation().x;
                 int mainY = getLocation().y;
                 int mainWidth = getWidth();
+
 
                 timeCalc_Window.setLocation(mainX + mainWidth, mainY);
                 timeCalc_Window.setVisible(true);

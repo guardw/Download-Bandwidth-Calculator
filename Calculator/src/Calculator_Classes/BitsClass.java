@@ -10,7 +10,7 @@ public class BitsClass {
     public static final String[] UNITS   = {"KB", "MB", "GB", "TB",}; // KB - KiloBytes kb - kilobits
 
     public static final Double[] UNITS_BASE = {0.0009765625, 1.0, 1024.0, 1_048_576.0};
-    public static final Double[] UNITS_BASE2 = {1.0, 1_000.0, 1_000_000.0, 1_000_000_000.0, 1_000_000_000_000.0}; // to decimal
+    public static final Double[] UNITS_BASE2 = {1.0, 1_000.0, 1_000_000.0, 1_000_000_000.0,}; // to decimal
 
     public static final String[] SPEED_UNITS = {"Kbit/s", "Mbit/s", "Gbit/s", "Tbit/s"}; // bits ni ha dili bytes 
     
